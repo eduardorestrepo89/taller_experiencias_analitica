@@ -4,6 +4,7 @@ import pandas as pd
 from torch.utils.data import TensorDataset
 from sklearn import datasets
 from sklearn.model_selection import train_test_split
+import numpy as np
 # Testing
 import argparse
 import wandb
@@ -39,9 +40,8 @@ def load(train_size=.8):
     # x_train, x_val = x_train[:int(len(train)*train_size)], x_train[int(len(train)*train_size):]
     # y_train, y_val = y_train[:int(len(train)*train_size)], y_train[int(len(train)*train_size):]
 
-    training_set = TensorDataset(X_train, y_train)
-    test_set = TensorDataset(X_test, y_test)
-    _datasets = [training_set, test_set]
+
+    _datasets = [X_train, X_test, y_train, y_test]
     return _datasets
 
 def load_and_log():
@@ -51,7 +51,7 @@ def load_and_log():
         name=f"Load Raw Data ExecId-{args.IdExecution}", job_type="load-data") as run:
         
         _datasets = load()  # separate code for loading the datasets
-        names = ["training", "test"]
+        names = ["X_train", "X_test", "y_train", "y_test"]
 
         # 🏺 create our Artifact
         raw_data = wandb.Artifact(
@@ -62,9 +62,9 @@ def load_and_log():
 
         for name, data in zip(names, _datasets):
             # 🐣 Store a new file in the artifact, and write something into its contents.
-            with raw_data.new_file(name + ".pt", mode="wb") as file:
-                x, y = data.tensors
-                torch.save((x, y), file)
+            with raw_data.new_file(name + ".npy", mode="wb") as file:
+               
+                np.save(file, data)
 
         # ✍️ Save the artifact to W&B.
         run.log_artifact(raw_data)
