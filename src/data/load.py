@@ -1,7 +1,4 @@
-import torch
-import torchvision
 import pandas as pd
-from torch.utils.data import TensorDataset
 from sklearn import datasets
 from sklearn.model_selection import train_test_split
 import numpy as np
@@ -16,7 +13,7 @@ args = parser.parse_args()
 if args.IdExecution:
     print(f"IdExecution: {args.IdExecution}")
 
-def load(train_size=.8):
+def load():
     
     # Load data
     housing = datasets.fetch_california_housing()
@@ -30,17 +27,6 @@ def load(train_size=.8):
     """
     # Load the data
     """
-    # the data, split between train and test sets
-    # train = torchvision.datasets.MNIST(root='./data', train=True, download=True)
-    # test = torchvision.datasets.MNIST(root='./data', train=False, download=True)
-
-    # (x_train, y_train), (x_test, y_test) = (train.data, train.targets), (test.data, test.targets)
-
-    # split off a validation set for hyperparameter tuning
-    # x_train, x_val = x_train[:int(len(train)*train_size)], x_train[int(len(train)*train_size):]
-    # y_train, y_val = y_train[:int(len(train)*train_size)], y_train[int(len(train)*train_size):]
-
-
     _datasets = [X_train, X_test, y_train, y_test]
     return _datasets
 
