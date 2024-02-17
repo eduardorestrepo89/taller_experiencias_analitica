@@ -32,7 +32,7 @@ def train_save_and_log(steps):
             metadata=steps)
          
         # ✔️ Load dataset
-        raw_data_artifact = run.use_artifact('california-housing-raw:latest')
+        raw_data_artifact = run.use_artifact('California-housing-raw:latest')
 
         # 📥 Extract dataset
         raw_dataset = raw_data_artifact.download(root="./data/artifacts/")
