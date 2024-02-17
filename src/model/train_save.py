@@ -1,8 +1,5 @@
-import torch
-import torchvision
 import joblib
 import numpy as np
-from torch.utils.data import TensorDataset
 from sklearn.linear_model import Ridge
 from sklearn.metrics import r2_score
 from sklearn.metrics import mean_squared_error
