@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'src/model/train.py'
+      - 'src/model/train_save.py'
 
 jobs:
   train_model:
@@ -26,5 +26,5 @@ jobs:
         pip install -r requirements.txt
     - name: Login to WandB
       run: wandb login ${{ secrets.WANDB_API_KEY }}
-    - name: Run train.py
-      run: python src/model/train.py --IdExecution ${{ github.run_number }}
+    - name: Run train_save.py
+      run: python src/model/train_save.py --IdExecution ${{ github.run_number }}
