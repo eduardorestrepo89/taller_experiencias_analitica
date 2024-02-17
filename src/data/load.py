@@ -41,8 +41,8 @@ def load(train_size=.8):
 
     training_set = TensorDataset(X_train, y_train)
     test_set = TensorDataset(X_test, y_test)
-    datasets = [training_set, test_set]
-    return datasets
+    _datasets = [training_set, test_set]
+    return _datasets
 
 def load_and_log():
     # 🚀 start a run, with a type to label it and a project it can call home
@@ -50,7 +50,7 @@ def load_and_log():
         project="yml_2_trabajo",
         name=f"Load Raw Data ExecId-{args.IdExecution}", job_type="load-data") as run:
         
-        datasets = load()  # separate code for loading the datasets
+        _datasets = load()  # separate code for loading the datasets
         names = ["training", "test"]
 
         # 🏺 create our Artifact
@@ -58,9 +58,9 @@ def load_and_log():
             "California-housing-raw", type="dataset",
             description="raw California-housing dataset, split into train/test",
             metadata={"source": "sklearn.datasets.fetch_california_housing",
-                      "sizes": [len(dataset) for dataset in datasets]})
+                      "sizes": [len(dataset) for dataset in _datasets]})
 
-        for name, data in zip(names, datasets):
+        for name, data in zip(names, _datasets):
             # 🐣 Store a new file in the artifact, and write something into its contents.
             with raw_data.new_file(name + ".pt", mode="wb") as file:
                 x, y = data.tensors
@@ -71,4 +71,3 @@ def load_and_log():
 
 # testing
 load_and_log()
-#
